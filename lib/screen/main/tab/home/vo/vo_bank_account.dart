@@ -1,13 +1,14 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'vo_bank.dart';
 
-class BankAccount {
-  final Bank bank;
-  int balance;
-  final String? accountTypeName;
+part 'vo_bank_account.freezed.dart';
 
-  BankAccount(
-    this.bank,
-    this.balance, {
-    this.accountTypeName,
-  });
+@freezed
+class BankAccount with _$BankAccount {
+  factory BankAccount(
+    final Bank bank,
+    int balance, {
+    final String? accountTypeName,
+  }) = _BankAccount;
 }
