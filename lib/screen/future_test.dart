@@ -31,6 +31,19 @@ void main() async {
   print('End');
 
   //FutureOr
+  final syncValue = SyncWork().doWork();
+  final asyncValue = await AsyncWork().doWork();
+  print(syncValue);
+  print(asyncValue);
+
+  final multiResult = await Future.wait([
+    getBankAccounts(),
+    getBankAccounts(),
+    getBankAccounts(),
+  ]);
+  print(multiResult[0][0]);
+  print(multiResult[1][0]);
+  print(multiResult[2][0]);
 }
 
 abstract class DoWorkInterface {
