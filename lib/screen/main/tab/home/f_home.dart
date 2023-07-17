@@ -10,6 +10,7 @@ import '../../../dialog/d_color_bottom.dart';
 import '../../../dialog/d_confirm.dart';
 import '../../s_main.dart';
 import 'bank_accounts_dummy.dart';
+import 's_number.dart';
 
 class HomeFragment extends StatelessWidget {
   const HomeFragment({
@@ -35,8 +36,11 @@ class HomeFragment extends StatelessWidget {
                 children: [
                   BigButton(
                     "토스뱅크",
-                    onTap: () {
-                      context.showSnackbar("토스뱅크를 눌렀어요.");
+                    onTap: () async {
+                      print('start');
+                      final result = await Nav.push(NumberScreen());
+                      print(result);
+                      print('end');
                     },
                   ),
                   height10,
