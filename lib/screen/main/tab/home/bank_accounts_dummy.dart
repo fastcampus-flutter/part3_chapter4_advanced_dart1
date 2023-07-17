@@ -1,27 +1,84 @@
-import 'package:fast_app_base/screen/main/tab/home/banks_dummy.dart';
 import 'package:fast_app_base/screen/main/tab/home/vo/vo_bank_account.dart';
+
+import 'banks_dummy.dart';
 
 final bankAccountShinhan1 = BankAccount(bankShinhan, 300, accountTypeName: "신한 주거래 우대통장(저축예금)");
 final bankAccountShinhan2 = BankAccount(bankShinhan, 200, accountTypeName: "저축예금");
 final bankAccountShinhan3 = BankAccount(bankShinhan, 100, accountTypeName: "저축예금");
 final bankAccountToss = BankAccount(bankTtoss, 400);
 final bankAccountKakao = BankAccount(bankKakao, 70000, accountTypeName: "입출금통장");
+final bankAccountKakao2 = BankAccount(bankKakao, 1000000, accountTypeName: "특별통장");
+
+abstract class Animal {
+  void eat();
+}
+
+class Dog extends Animal {
+  void eat() {
+    print('dog');
+  }
+}
+
+class Cat extends Animal {
+  void eat() {
+    print('cat');
+  }
+}
+
+class Cow extends Animal {
+  void eat() {
+    print('cow');
+  }
+}
 
 main() {
-  //print(bankAccounts[3].accountTypeName);
-  //
-  // for (final item in bankAccounts) {
-  //   print(item.accountTypeName);
-  // }
-  // final shinhanBank = bankMap["shinhan1"];
-  // //print(shinhanBank ==bankAccountShinhan1);
-  //
-  // for (final entry in bankMap.entries) {
-  //   print(entry.key + ":" + (entry.value.accountTypeName ?? entry.value.bank.name));
-  // }
-  //
-  //print(bankSet.length);
-  print(bankAccounts.toString());
+  //class generic
+
+  final result = doTheWork();
+  final result2 = doTheWork2();
+
+  //method or function generic
+
+  final result3 = doTheWork3<Dog>(() => Dog());
+  result3.eat();
+}
+
+class Result<T> {
+  final T data;
+
+  Result(this.data);
+}
+
+class ResultString {
+  final String data;
+
+  ResultString(this.data);
+}
+
+class ResultDouble {
+  final double data;
+
+  ResultDouble(this.data);
+}
+
+Result doTheWork3<Result extends Animal>(Result Function() animalCreator) {
+  return animalCreator();
+}
+
+Result<String> doTheWork() {
+  ///...1
+  ///...2
+  ///
+  /// ..4
+  return Result("중요한 데이터");
+}
+
+ResultDouble doTheWork2() {
+  ///...1
+  ///...2
+  ///
+  /// ..4
+  return ResultDouble(5234.44);
 }
 
 //List
