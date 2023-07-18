@@ -12,10 +12,22 @@ import '../../s_main.dart';
 import 'bank_accounts_dummy.dart';
 import 's_number.dart';
 
-class HomeFragment extends StatelessWidget {
+class HomeFragment extends StatefulWidget {
   const HomeFragment({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<HomeFragment> createState() => _HomeFragmentState();
+}
+
+class _HomeFragmentState extends State<HomeFragment> {
+  late final stream = countStream(5).asBroadcastStream();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +46,48 @@ class HomeFragment extends StatelessWidget {
                   bottom: MainScreenState.bottomNavigatorHeight),
               child: Column(
                 children: [
+                  StreamBuilder(
+                    builder: (context, snapshot) {
+                      final count = snapshot.data;
+
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.active:
+                          if (count == null) {
+                            return const CircularProgressIndicator();
+                          } else {
+                            return count.text.size(30).bold.make();
+                          }
+
+                        case ConnectionState.waiting:
+                        case ConnectionState.none:
+                          return const CircularProgressIndicator();
+                        case ConnectionState.done:
+                          return '완료'.text.size(30).bold.make();
+                      }
+                    },
+                    stream: stream,
+                  ),
+                  StreamBuilder(
+                    builder: (context, snapshot) {
+                      final count = snapshot.data;
+
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.active:
+                          if (count == null) {
+                            return const CircularProgressIndicator();
+                          } else {
+                            return count.text.size(30).bold.make();
+                          }
+
+                        case ConnectionState.waiting:
+                        case ConnectionState.none:
+                          return const CircularProgressIndicator();
+                        case ConnectionState.done:
+                          return '완료'.text.size(30).bold.make();
+                      }
+                    },
+                    stream: stream,
+                  ),
                   BigButton(
                     "토스뱅크",
                     onTap: () async {
@@ -61,6 +115,14 @@ class HomeFragment extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Stream<int> countStream(int max) async* {
+    await sleepAsync(2.seconds);
+    for (int i = 1; i <= max; i++) {
+      yield i;
+      await sleepAsync(1.seconds);
+    }
   }
 
   void showSnackbar(BuildContext context) {
