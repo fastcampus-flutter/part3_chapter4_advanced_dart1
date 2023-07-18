@@ -1,8 +1,16 @@
 class Animal {
-  final int age;
+  int age;
   final String name;
 
   Animal(this.age, this.name);
+
+  void eat() {
+    age++;
+  }
+
+  final eat2 = () {
+    //age++; // error
+  };
 
   @override
   String toString() {
