@@ -74,6 +74,11 @@ dependencies:
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.0
   timeago: ^3.4.0
+  flutter_animate: ^4.2.0
+  live_background: ^0.1.3
+  animations: ^2.0.7
+  rive: ^0.7.16
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:
@@ -107,6 +112,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - assets/rive/
     - assets/json/
     - assets/image/
     - assets/image/icon/

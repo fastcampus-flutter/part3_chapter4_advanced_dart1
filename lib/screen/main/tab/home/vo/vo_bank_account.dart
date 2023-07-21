@@ -7,6 +7,7 @@ part 'vo_bank_account.freezed.dart';
 @freezed
 class BankAccount with _$BankAccount {
   factory BankAccount(
+    final int userId,
     final Bank bank,
     int balance, {
     final String? accountTypeName,

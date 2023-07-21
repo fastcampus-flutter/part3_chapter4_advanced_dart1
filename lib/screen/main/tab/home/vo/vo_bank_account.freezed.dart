@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$BankAccount {
+  int get userId => throw _privateConstructorUsedError;
   Bank get bank => throw _privateConstructorUsedError;
   int get balance => throw _privateConstructorUsedError;
   String? get accountTypeName => throw _privateConstructorUsedError;
@@ -31,7 +32,7 @@ abstract class $BankAccountCopyWith<$Res> {
           BankAccount value, $Res Function(BankAccount) then) =
       _$BankAccountCopyWithImpl<$Res, BankAccount>;
   @useResult
-  $Res call({Bank bank, int balance, String? accountTypeName});
+  $Res call({int userId, Bank bank, int balance, String? accountTypeName});
 
   $BankCopyWith<$Res> get bank;
 }
@@ -49,11 +50,16 @@ class _$BankAccountCopyWithImpl<$Res, $Val extends BankAccount>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userId = null,
     Object? bank = null,
     Object? balance = null,
     Object? accountTypeName = freezed,
   }) {
     return _then(_value.copyWith(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       bank: null == bank
           ? _value.bank
           : bank // ignore: cast_nullable_to_non_nullable
@@ -86,7 +92,7 @@ abstract class _$$_BankAccountCopyWith<$Res>
       __$$_BankAccountCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Bank bank, int balance, String? accountTypeName});
+  $Res call({int userId, Bank bank, int balance, String? accountTypeName});
 
   @override
   $BankCopyWith<$Res> get bank;
@@ -103,11 +109,16 @@ class __$$_BankAccountCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userId = null,
     Object? bank = null,
     Object? balance = null,
     Object? accountTypeName = freezed,
   }) {
     return _then(_$_BankAccount(
+      null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
       null == bank
           ? _value.bank
           : bank // ignore: cast_nullable_to_non_nullable
@@ -127,8 +138,10 @@ class __$$_BankAccountCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_BankAccount implements _BankAccount {
-  _$_BankAccount(this.bank, this.balance, {this.accountTypeName});
+  _$_BankAccount(this.userId, this.bank, this.balance, {this.accountTypeName});
 
+  @override
+  final int userId;
   @override
   final Bank bank;
   @override
@@ -138,7 +151,7 @@ class _$_BankAccount implements _BankAccount {
 
   @override
   String toString() {
-    return 'BankAccount(bank: $bank, balance: $balance, accountTypeName: $accountTypeName)';
+    return 'BankAccount(userId: $userId, bank: $bank, balance: $balance, accountTypeName: $accountTypeName)';
   }
 
   @override
@@ -146,6 +159,7 @@ class _$_BankAccount implements _BankAccount {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BankAccount &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.bank, bank) || other.bank == bank) &&
             (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.accountTypeName, accountTypeName) ||
@@ -153,7 +167,8 @@ class _$_BankAccount implements _BankAccount {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, bank, balance, accountTypeName);
+  int get hashCode =>
+      Object.hash(runtimeType, userId, bank, balance, accountTypeName);
 
   @JsonKey(ignore: true)
   @override
@@ -163,9 +178,11 @@ class _$_BankAccount implements _BankAccount {
 }
 
 abstract class _BankAccount implements BankAccount {
-  factory _BankAccount(final Bank bank, final int balance,
+  factory _BankAccount(final int userId, final Bank bank, final int balance,
       {final String? accountTypeName}) = _$_BankAccount;
 
+  @override
+  int get userId;
   @override
   Bank get bank;
   @override

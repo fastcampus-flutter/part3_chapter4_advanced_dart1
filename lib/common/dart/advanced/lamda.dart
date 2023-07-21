@@ -62,7 +62,7 @@ main() {
   // print(add(2)(3));
 }
 
-void run(int Function(int a, int b) add2, int a, int b) {
+void runOperation(int Function(int a, int b) add2, int a, int b) {
   final sum = add2(a, b);
   print(sum);
 }

@@ -2,12 +2,12 @@ import 'package:fast_app_base/screen/main/tab/home/vo/vo_bank_account.dart';
 
 import 'banks_dummy.dart';
 
-final bankAccountShinhan1 = BankAccount(bankShinhan, 300, accountTypeName: "신한 주거래 우대통장(저축예금)");
-final bankAccountShinhan2 = BankAccount(bankShinhan, 200, accountTypeName: "저축예금");
-final bankAccountShinhan3 = BankAccount(bankShinhan, 100, accountTypeName: "저축예금");
-final bankAccountToss = BankAccount(bankTtoss, 400);
-final bankAccountKakao = BankAccount(bankKakao, 70000, accountTypeName: "입출금통장");
-final bankAccountKakao2 = BankAccount(bankKakao, 1000000, accountTypeName: "특별통장");
+final bankAccountShinhan1 = BankAccount(1, bankShinhan, 300, accountTypeName: "신한 주거래 우대통장(저축예금)");
+final bankAccountShinhan2 = BankAccount(2, bankShinhan, 200, accountTypeName: "저축예금");
+final bankAccountShinhan3 = BankAccount(3, bankShinhan, 100, accountTypeName: "저축예금");
+final bankAccountToss = BankAccount(4, bankTtoss, 400);
+final bankAccountKakao = BankAccount(5, bankKakao, 70000, accountTypeName: "입출금통장");
+final bankAccountKakao2 = BankAccount(6, bankKakao, 1000000, accountTypeName: "특별통장");
 
 abstract class Animal {
   void eat();

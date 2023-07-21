@@ -2,6 +2,7 @@ import 'package:fast_app_base/common/common.dart';
 import 'package:fast_app_base/common/widget/w_rounded_container.dart';
 import 'package:fast_app_base/screen/dialog/d_message.dart';
 import 'package:fast_app_base/screen/main/tab/home/w_bank_account.dart';
+import 'package:fast_app_base/screen/main/tab/home/w_rive_like_button.dart';
 import 'package:fast_app_base/screen/main/tab/home/w_ttoss_app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,7 @@ class HomeFragment extends StatefulWidget {
 
 class _HomeFragmentState extends State<HomeFragment> {
   late final stream = countStream(5).asBroadcastStream();
+  bool isLike = false;
 
   @override
   void initState() {
@@ -46,6 +48,21 @@ class _HomeFragmentState extends State<HomeFragment> {
                   bottom: MainScreenState.bottomNavigatorHeight),
               child: Column(
                 children: [
+                  SizedBox(
+                    width: 250,
+                    height: 250,
+                    child: RiveLikeButton(
+                      isLike,
+                      onTapLike: (bool isLike) async {
+                        setState(() {
+                          this.isLike = isLike;
+                        });
+                        delay(() {
+                          veryHeavyComputationWork();
+                        }, 50.ms);
+                      },
+                    ),
+                  ),
                   StreamBuilder(
                     builder: (context, snapshot) {
                       final count = snapshot.data;
@@ -167,5 +184,13 @@ class _HomeFragmentState extends State<HomeFragment> {
 
   void openDrawer(BuildContext context) {
     Scaffold.of(context).openDrawer();
+  }
+
+  void veryHeavyComputationWork() {
+    int count = 0;
+    for (int i = 0; i <= 1850000000; i++) {
+      count++;
+    }
+    print(count);
   }
 }

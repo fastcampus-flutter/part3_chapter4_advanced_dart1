@@ -1,4 +1,4 @@
-import 'package:fast_app_base/common/dart/extension/num_duration_extension.dart';
+import 'package:fast_app_base/common/cli_common.dart';
 
 void main() async {
   /// List와 Iterable

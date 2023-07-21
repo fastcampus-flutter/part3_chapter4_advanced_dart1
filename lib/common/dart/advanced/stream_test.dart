@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:fast_app_base/common/dart/extension/num_duration_extension.dart';
-import 'package:fast_app_base/screen/future_test.dart';
+import 'package:fast_app_base/common/cli_common.dart';
 
 void main() {
   /// Stream 기본 개념

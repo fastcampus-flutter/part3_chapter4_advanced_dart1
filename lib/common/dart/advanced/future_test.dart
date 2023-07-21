@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:fast_app_base/common/dart/extension/num_duration_extension.dart';
+import 'package:fast_app_base/common/cli_common.dart';
 import 'package:fast_app_base/screen/main/tab/home/bank_accounts_dummy.dart';
 import 'package:fast_app_base/screen/main/tab/home/vo/vo_bank_account.dart';
 
@@ -67,8 +67,4 @@ class AsyncWork extends DoWorkInterface {
 Future<List<BankAccount>> getBankAccounts() async {
   await sleepAsync(2.seconds);
   return bankAccounts;
-}
-
-Future sleepAsync(Duration duration) {
-  return Future.delayed(duration, () => {});
 }
