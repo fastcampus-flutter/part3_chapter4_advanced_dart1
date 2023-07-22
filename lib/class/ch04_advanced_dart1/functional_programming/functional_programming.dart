@@ -28,9 +28,9 @@ main() async {
   print('start');
   final list = await (await fetchAccounts())
       .toStream()
-      .map((event) => event.userId)
-      .asyncMap((event) => fetchUser(event))
-      .map((event) => event.name)
+      .map((accounts) => accounts.userId)
+      .asyncMap((userId) => fetchUser(userId))
+      .map((user) => user.name)
       .toList();
   print(list);
   print('end');
@@ -49,6 +49,7 @@ Future<User> fetchUser(int id) async {
     2 => User(id, 'Dart'),
     3 => User(id, 'Baby'),
     4 => User(id, 'Love'),
+    5 => User(id, 'Popcorn'),
     _ => throw Exception('404 not found')
   };
 }
