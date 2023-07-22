@@ -109,9 +109,14 @@ class _HomeFragmentState extends State<HomeFragment> {
                     "토스뱅크",
                     onTap: () async {
                       print('start');
-                      final result = await Nav.push(NumberScreen());
-                      print(result);
+                      final list = await ([1, 2, 3, 4, 5])
+                          .toStream()
+                          .asyncMap((event) => Nav.push<int>(NumberScreen()))
+                          .toList();
+                      print(list);
                       print('end');
+                      //final result = await Nav.push(NumberScreen());
+                      //print(result);
                     },
                   ),
                   height10,

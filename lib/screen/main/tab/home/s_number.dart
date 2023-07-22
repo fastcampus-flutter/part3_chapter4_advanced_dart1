@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:nav/nav.dart';
 
@@ -10,7 +12,7 @@ class NumberScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Tap(
         onTap: () {
-          Nav.pop(context, result: 20);
+          Nav.pop(context, result: Random().nextInt(30));
         },
         child: const Placeholder());
   }
