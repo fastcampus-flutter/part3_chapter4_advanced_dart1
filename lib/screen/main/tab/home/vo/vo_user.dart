@@ -4,3 +4,7 @@ class User {
 
   User(this.id, this.name);
 }
+
+User Function(String name) userCreator(int id) {
+  return (name) => User(id, name);
+}

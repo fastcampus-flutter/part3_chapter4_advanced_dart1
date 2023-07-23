@@ -3,6 +3,8 @@ import 'package:fast_app_base/screen/main/tab/home/bank_accounts_dummy.dart';
 import 'package:fast_app_base/screen/main/tab/home/vo/vo_bank_account.dart';
 import 'package:fast_app_base/screen/main/tab/home/vo/vo_user.dart';
 
+import 'fxDart.dart';
+
 main() async {
   // print('start');
   // final list = <String>[];
@@ -14,27 +16,45 @@ main() async {
   // final userList = list;
   // print(userList);
   // print('end');
+  //
+  // print('start');
+  // final list = await (await fetchAccounts())
+  //     .toStream()
+  //     .map((accounts) => accounts.userId)
+  //     .asyncMap((userId) => fetchUser(userId))
+  //     .map((user) => user.name)
+  //     .toList();
+  // print(list);
+  // print('end');
+
+  print('start');
+  await fxDart([
+    await fetchAccounts(),
+    (accounts) => map((BankAccount account) => account.userId, accounts),
+    (List<int> userIds) => futureMap(fetchUser, userIds),
+    (users) => map((User user) => user.name, users),
+    (names) => runAll((names) => print(names.toList()), names)
+  ]);
+  print('end');
 
   // print('start');
   // await fxDart([
   //   await fetchAccounts(),
-  //   (accounts) => map((BankAccount account) => account.userId, accounts),
-  //   (List<int> userIds) => futureMap(fetchUser, userIds),
-  //   (users) => map((User user) => user.name, users),
-  //   (names) => run((names) => print(names.toList()), names),
+  //   accountToUserId,
+  //   idToFetchedUser,
+  //   userToName,
+  //   printNames,
   // ]);
   // print('end');
-
-  print('start');
-  final list = await (await fetchAccounts())
-      .toStream()
-      .map((accounts) => accounts.userId)
-      .asyncMap((userId) => fetchUser(userId))
-      .map((user) => user.name)
-      .toList();
-  print(list);
-  print('end');
 }
+
+printNames(names) => runAll((names) => print(names.toList()), names);
+
+userToName(users) => map((User user) => user.name, users);
+
+idToFetchedUser(List<int> userIds) => futureMap(fetchUser, userIds);
+
+accountToUserId(accounts) => map((BankAccount account) => account.userId, accounts);
 
 Future<List<BankAccount>> fetchAccounts() async {
   await sleepAsync(300.ms);

@@ -6,7 +6,7 @@ export 'functions/reduce.dart';
 export 'functions/run.dart';
 
 fxDart(List args) async {
-  await reduce((a, f) async {
+  return await reduce((a, f) async {
     if (a is Future) {
       return f(await a);
     }
