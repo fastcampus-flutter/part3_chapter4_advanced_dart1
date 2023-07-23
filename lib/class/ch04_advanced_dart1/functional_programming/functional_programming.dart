@@ -27,26 +27,26 @@ main() async {
   // print(list);
   // print('end');
 
-  print('start');
-  await fxDart([
-    await fetchAccounts(),
-    (accounts) => map((BankAccount account) => account.userId, accounts),
-    (List<int> userIds) => futureMap(fetchUser, userIds),
-    (users) => map((User user) => user.name, users),
-    (names) => runAll((names) => print(names.toList()), names)
-  ]);
-  print('end');
-
   // print('start');
   // await fxDart([
   //   await fetchAccounts(),
-  //   accountToUserId,
-  //   idToFetchedUser,
-  //   userToName,
-  //   printNames,
+  //   (accounts) => map((BankAccount account) => account.userId, accounts),
+  //   (List<int> userIds) => futureMap(fetchUser, userIds),
+  //   (users) => map((User user) => user.name, users),
+  //   (names) => runAll((names) => print(names.toList()), names)
   // ]);
   // print('end');
+
+  print('start');
+  await fxDart([
+    await fetchAccounts(),
+    ...accountToEachFutureUser,
+    printNames,
+  ]);
+  print('end');
 }
+
+List get accountToEachFutureUser => [accountToUserId, idToFetchedUser, userToName];
 
 printNames(names) => runAll((names) => print(names.toList()), names);
 
@@ -62,6 +62,7 @@ Future<List<BankAccount>> fetchAccounts() async {
 }
 
 Future<User> fetchUser(int id) async {
+  print('fetch User:$id');
   await sleepAsync(300.ms);
 
   return switch (id) {
