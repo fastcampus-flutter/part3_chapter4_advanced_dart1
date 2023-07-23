@@ -219,14 +219,12 @@ class _HomeFragmentState extends State<HomeFragment> {
     progressListenPort.listen((message) {
       debugPrint('received from isolate');
       debugPrint(message.toString());
-    }, onDone: () {
-      debugPrint('Done from progressListenPort');
     });
     final isolate = await Isolate.spawn((port) {
       int count = 0;
       debugPrint('Isolate Count Start');
       final startTime = DateTime.now();
-      for (int i = 0; i <= 1800000000; i++) {
+      for (int i = 0; i <= 800000000; i++) {
         count += 1;
 
         if (i % 100000000 == 0) {
@@ -244,8 +242,8 @@ class _HomeFragmentState extends State<HomeFragment> {
 
     debugPrint('spawn done');
     delay(() {
-      debugPrint('force kill');
-      isolate.kill(priority: Isolate.immediate);
+      // debugPrint('force kill');
+      // isolate.kill(priority: Isolate.immediate);
 
       // debugPrint('force exit isolate');
       // Isolate.exit(isolate.controlPort);
