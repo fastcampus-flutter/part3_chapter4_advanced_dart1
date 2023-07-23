@@ -231,6 +231,7 @@ class _HomeFragmentState extends State<HomeFragment> {
 
         if (i % 100000000 == 0) {
           port.send(count);
+          debugPrint("${DateTime.now().difference(startTime).inMilliseconds / 1000}sec");
         }
 
         // if (i % 10000000 == 0) {
@@ -242,7 +243,13 @@ class _HomeFragmentState extends State<HomeFragment> {
     }, progressListenPort.sendPort, onError: errorPort.sendPort, onExit: exitPort.sendPort);
 
     debugPrint('spawn done');
-    //Isolate.exit(isolate.controlPort);
+    delay(() {
+      debugPrint('force kill');
+      isolate.kill(priority: Isolate.immediate);
+
+      // debugPrint('force exit isolate');
+      // Isolate.exit(isolate.controlPort);
+    }, 500.ms);
   }
 
   ///Flutter 3.7 이상
