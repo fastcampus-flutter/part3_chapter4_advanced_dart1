@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:fast_app_base/common/common.dart';
 import 'package:fast_app_base/common/widget/w_rounded_container.dart';
 import 'package:fast_app_base/screen/dialog/d_message.dart';
@@ -58,7 +60,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                           this.isLike = isLike;
                         });
                         delay(() {
-                          veryHeavyComputationWork();
+                          veryHeavyComputationWorkWithIsolate();
                         }, 50.ms);
                       },
                     ),
@@ -191,11 +193,45 @@ class _HomeFragmentState extends State<HomeFragment> {
     Scaffold.of(context).openDrawer();
   }
 
-  void veryHeavyComputationWork() {
+  int wow = 0;
+
+  void veryHeavyComputationWork() async {
     int count = 0;
-    for (int i = 0; i <= 1850000000; i++) {
-      count++;
+    print('Count Start');
+    final startTime = DateTime.now();
+    for (int i = 0; i <= 900000000; i++) {
+      count += 7;
     }
+    //wow = count;
     print(count);
+    print("${DateTime.now().difference(startTime).inMilliseconds / 1000}sec");
+  }
+
+  void veryHeavyComputationWorkWithIsolate() async {
+    final errorPort = ReceivePort();
+    errorPort.listen((element) {
+      print(element);
+    });
+    final exitPort = ReceivePort();
+    exitPort.listen((message) {
+      print(message);
+      print(wow);
+    });
+    final isolate = await Isolate.spawn<String>((message) {
+      int count = 0;
+      print('Count Start');
+      final startTime = DateTime.now();
+      for (int i = 0; i <= 900000000; i++) {
+        count += 7;
+      }
+      //wow = count;
+      print(count);
+      print("${DateTime.now().difference(startTime).inMilliseconds / 1000}sec");
+      // wow = 5055;
+      // print(wow);
+    }, 'message', onError: errorPort.sendPort, onExit: exitPort.sendPort);
+    //isolate.controlPort.
+
+    //Isolate.exit(isolate.controlPort);
   }
 }
