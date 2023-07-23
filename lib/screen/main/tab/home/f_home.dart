@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:fast_app_base/common/common.dart';
@@ -56,12 +57,10 @@ class _HomeFragmentState extends State<HomeFragment> {
                     child: RiveLikeButton(
                       isLike,
                       onTapLike: (bool isLike) async {
+                        await veryHeavyComputationWorkWithIsolateSpawn();
                         setState(() {
                           this.isLike = isLike;
                         });
-                        delay(() {
-                          veryHeavyComputationWorkWithIsolate();
-                        }, 50.ms);
                       },
                     ),
                   ),
@@ -110,13 +109,13 @@ class _HomeFragmentState extends State<HomeFragment> {
                   BigButton(
                     "토스뱅크",
                     onTap: () async {
-                      print('start');
+                      debugPrint('start');
                       final list = await ([1, 2, 3, 4, 5])
                           .toStream()
                           .asyncMap((event) => Nav.push<int>(NumberScreen()))
                           .toList();
-                      print(list);
-                      print('end');
+                      debugPrint(list.toString());
+                      debugPrint('end');
                       //final result = await Nav.push(NumberScreen());
                       //print(result);
                     },
@@ -195,43 +194,74 @@ class _HomeFragmentState extends State<HomeFragment> {
 
   int wow = 0;
 
-  void veryHeavyComputationWork() async {
+  Future<void> veryHeavyComputationWork() async {
     int count = 0;
-    print('Count Start');
+    debugPrint('Count Start');
     final startTime = DateTime.now();
     for (int i = 0; i <= 900000000; i++) {
       count += 7;
     }
-    //wow = count;
-    print(count);
-    print("${DateTime.now().difference(startTime).inMilliseconds / 1000}sec");
+    debugPrint(count.toString());
+    debugPrint('${DateTime.now().difference(startTime).inMilliseconds / 1000}sec');
   }
 
-  void veryHeavyComputationWorkWithIsolate() async {
+  Future<void> veryHeavyComputationWorkWithIsolateSpawn() async {
     final errorPort = ReceivePort();
     errorPort.listen((element) {
-      print(element);
+      debugPrint('Isolate Error!');
+      debugPrint(element);
     });
     final exitPort = ReceivePort();
     exitPort.listen((message) {
-      print(message);
-      print(wow);
+      debugPrint('Exit - Done');
     });
-    final isolate = await Isolate.spawn<String>((message) {
+    final progressListenPort = ReceivePort();
+    progressListenPort.listen((message) {
+      debugPrint('received from isolate');
+      debugPrint(message.toString());
+    }, onDone: () {
+      debugPrint('Done from progressListenPort');
+    });
+    final isolate = await Isolate.spawn((port) {
       int count = 0;
-      print('Count Start');
+      debugPrint('Isolate Count Start');
+      final startTime = DateTime.now();
+      for (int i = 0; i <= 1800000000; i++) {
+        count += 1;
+
+        if (i % 100000000 == 0) {
+          port.send(count);
+        }
+
+        // if (i % 10000000 == 0) {
+        //   throw Exception('error');
+        // }
+      }
+      debugPrint(count.toString());
+      debugPrint("${DateTime.now().difference(startTime).inMilliseconds / 1000}sec");
+    }, progressListenPort.sendPort, onError: errorPort.sendPort, onExit: exitPort.sendPort);
+
+    debugPrint('spawn done');
+    //Isolate.exit(isolate.controlPort);
+  }
+
+  ///Flutter 3.7 이상
+  void veryHeavyComputationWorkWithIsolateRun() async {
+    const message = '{"message": "Flutter is good"}';
+    final isolateResult = await Isolate.run<String>(() {
+      final jsonObject = json.decode(message);
+      debugPrint(jsonObject["message"]);
+      int count = 0;
+      debugPrint('Isolate Count Start');
       final startTime = DateTime.now();
       for (int i = 0; i <= 900000000; i++) {
         count += 7;
       }
-      //wow = count;
-      print(count);
-      print("${DateTime.now().difference(startTime).inMilliseconds / 1000}sec");
-      // wow = 5055;
-      // print(wow);
-    }, 'message', onError: errorPort.sendPort, onExit: exitPort.sendPort);
-    //isolate.controlPort.
 
-    //Isolate.exit(isolate.controlPort);
+      debugPrint(count.toString());
+      debugPrint("${DateTime.now().difference(startTime).inMilliseconds / 1000}sec");
+      return "Run Isolate Done";
+    });
+    debugPrint(isolateResult);
   }
 }
