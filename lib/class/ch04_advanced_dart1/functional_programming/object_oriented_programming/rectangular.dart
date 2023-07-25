@@ -1,9 +1,5 @@
-import 'abstract_rectangular.dart';
-
-class Rectangular implements AbsRectangular {
-  @override
+class Rectangular {
   double height;
-  @override
   double width;
 
   Rectangular(this.height, this.width);

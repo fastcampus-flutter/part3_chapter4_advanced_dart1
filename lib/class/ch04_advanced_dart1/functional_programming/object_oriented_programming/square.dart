@@ -1,17 +1,17 @@
-import 'abstract_rectangular.dart';
+import 'package:fast_app_base/class/ch04_advanced_dart1/functional_programming/object_oriented_programming/rectangular.dart';
 
-class Square implements AbsRectangular {
-  double _side;
+class Square extends Rectangular {
+  Square(double side) : super(side, side);
 
-  set side(double value) {
-    _side = value;
+  @override
+  set height(double height) {
+    super.height = height;
+    super.width = height;
   }
 
-  Square(this._side);
-
   @override
-  double get height => _side;
-
-  @override
-  double get width => _side;
+  set width(double width) {
+    super.height = width;
+    super.width = width;
+  }
 }
