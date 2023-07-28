@@ -1,22 +1,22 @@
-class Animal {
-  int age;
-  final String name;
-
-  Animal(this.age, this.name);
-
-  void eat() {
-    age++;
-  }
-
-  final eat2 = () {
-    //age++; // error
-  };
-
-  @override
-  String toString() {
-    return "Animal: $age, $name";
-  }
-}
+// class Animal {
+//   int age;
+//   final String name;
+//
+//   Animal(this.age, this.name);
+//
+//   void eat() {
+//     age++;
+//   }
+//
+//   final eat2 = () {
+//     //age++; // error
+//   };
+//
+//   @override
+//   String toString() {
+//     return "Animal: $age, $name";
+//   }
+// }
 
 main() {
   /// 람다의 표현 설명
