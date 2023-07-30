@@ -79,6 +79,7 @@ dependencies:
   animations: ^2.0.7
   rive: ^0.7.16
   rxdart: ^0.27.7
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:

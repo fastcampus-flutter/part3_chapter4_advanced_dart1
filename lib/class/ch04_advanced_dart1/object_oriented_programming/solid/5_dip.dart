@@ -1,10 +1,20 @@
-class GamePlayer {
-  String firstName = '';
-  String lastName = '';
-  String profileUrl = '';
-  int level = 1;
-  int power = 20;
-  int point = 0;
+logger;
+
+  UserApi(this.logger);
+
+  void registerUser(String username, String password) {
+    logger.log("User registered: $username", 1);
+  }
 }
 
-main() {}
+class ConsoleLogger {
+  @override
+  void log(String message, int number) {
+    print("LOG: $message");
+  }
+}
+
+main() {
+  final api = UserApi(ConsoleLogger());
+  api.registerUser("홍길동", "abc123*");
+}

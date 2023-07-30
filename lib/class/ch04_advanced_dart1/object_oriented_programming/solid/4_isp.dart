@@ -1,10 +1,44 @@
-class GamePlayer {
-  String firstName = '';
-  String lastName = '';
-  String profileUrl = '';
-  int level = 1;
-  int power = 20;
-  int point = 0;
+import 'package:fast_app_base/class/ch04_advanced_dart1/object_oriented_programming/solid/1_srp/todo_note.dart';
+
+abstract interface class CoreLocalRepositoryInterface {
+  void save(TodoNote note);
+
+  void modify(TodoNote note);
 }
 
-main() {}
+abstract interface class LocalRepositoryInterface extends CoreLocalRepositoryInterface {
+  void sendLog(TodoNote note);
+
+  void retrySave(TodoNote note);
+}
+
+class Repo1 implements LocalRepositoryInterface {
+  @override
+  void modify(TodoNote note) {}
+
+  @override
+  void retrySave(TodoNote note) {}
+
+  @override
+  void save(TodoNote note) {}
+
+  @override
+  void sendLog(TodoNote note) {}
+}
+
+class Repo2 implements CoreLocalRepositoryInterface {
+  @override
+  void modify(TodoNote note) {}
+
+  @override
+  void save(TodoNote note) {}
+}
+
+main() {
+  final todo = TodoNote();
+  todo.setContent('수학 과제', "p20 ~ p40를 공책에 작성");
+
+  final repo = Repo1();
+  repo.save(todo);
+  repo.modify(todo);
+}
