@@ -1,4 +1,5 @@
-logger;
+class UserApi {
+  final ConsoleLogger logger;
 
   UserApi(this.logger);
 
