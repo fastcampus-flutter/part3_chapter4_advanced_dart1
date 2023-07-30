@@ -1,3 +1,4 @@
+//Method 분리
 class TodoNote {
   String title = '';
   String content = '';
