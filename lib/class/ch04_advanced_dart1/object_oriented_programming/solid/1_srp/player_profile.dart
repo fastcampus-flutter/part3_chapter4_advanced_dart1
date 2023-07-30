@@ -3,4 +3,6 @@ class PlayerProfile {
   String lastName = '';
   String profileUrl = '';
   String socialNetwork = 'facebook';
+
+  String nickname = '';
 }
